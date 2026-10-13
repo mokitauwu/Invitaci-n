@@ -2,71 +2,251 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¿Vamos al cine? ❤️</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: radial-gradient(circle at top, #541414, #100909 70%);
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    .tarjeta {
-      width: 100%;
-      max-width: 390px;
-      padding: 30px 22px;
-      border: 1px solid #a83232;
-      border-radius: 22px;
-      background: rgba(20, 10, 10, 0.94);
-      box-shadow: 0 0 35px #650d0d66;
-    }
-    .emoji { font-size: 52px; }
-    h1 { color: #ff5555; font-size: 30px; }
-    p { line-height: 1.6; color: #f3dede; }
-    button {
-      padding: 13px 24px;
-      margin: 8px;
-      border: 0;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #si { background: #e63946; color: white; }
-    #no { background: #333; color: white; }
-    #respuesta { color: #ff8585; font-weight: bold; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operación: Cita de Cine</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #f4eeee;
+    background:
+        radial-gradient(ellipse at 50% 0%, #6b1010 0%, transparent 45%),
+        radial-gradient(ellipse at bottom, #341010 0%, transparent 60%),
+        linear-gradient(145deg, #050606, #171719 55%, #080808);
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 3px,
+        rgba(255,255,255,0.025) 4px
+    );
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    padding: 28px 22px;
+    text-align: center;
+    background: rgba(8, 10, 10, 0.94);
+    border: 1px solid #8e2424;
+    box-shadow: 0 0 20px #7e101044, inset 0 0 25px #3a080822;
+}
+
+.topline {
+    color: #ff4242;
+    font-size: 11px;
+    letter-spacing: 4px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.biohazard {
+    font-size: 76px;
+    color: #d92929;
+    text-shadow: 0 0 15px #e00000, 0 0 35px #a00000;
+    margin: 8px 0;
+}
+
+h1 {
+    font-size: 28px;
+    letter-spacing: 3px;
+    margin: 8px 0;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    font-size: 11px;
+    color: #ff4a4a;
+    letter-spacing: 3px;
+    margin-bottom: 24px;
+}
+
+.line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #b42c2c, transparent);
+    margin: 20px 0;
+}
+
+.label {
+    color: #999;
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.question {
+    font-size: 23px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin: 12px 0;
+}
+
+.description {
+    color: #c9c9c9;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.date {
+    color: #ff5656;
+    font-weight: bold;
+    font-size: 19px;
+    letter-spacing: 1px;
+    line-height: 1.5;
+}
+
+button {
+    width: 100%;
+    border: 1px solid #ff4545;
+    padding: 15px 10px;
+    margin-top: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.accept {
+    color: white;
+    background: linear-gradient(100deg, #8c1010, #d51d1d);
+    box-shadow: 0 0 16px #a5000044;
+}
+
+.reject {
+    color: #aaa;
+    background: #121212;
+    border-color: #444;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+#message {
+    display: none;
+    margin-top: 22px;
+    padding: 18px 12px;
+    border: 1px solid #792020;
+    background: #260b0b;
+    line-height: 1.8;
+    animation: appear 0.5s ease;
+}
+
+#message h2 {
+    color: #ff5252;
+    font-size: 20px;
+}
+
+.footer {
+    color: #777;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 25px;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
 </head>
+
 <body>
-  <main class="tarjeta">
-    <div class="emoji">🎬❤️</div>
-    <h1>Una invitación para ti</h1>
-    <p>Tengo una pregunta importante para ti...</p>
-    <h2>¿Vamos al cine juntos?</h2>
-    <p>Una película, palomitas y un ratito contigo. ❤️</p>
-    <button id="si" onclick="aceptar()">¡Sí, vamos! ❤️</button>
-    <button id="no" onclick="rechazar()">No 🙈</button>
-    <p id="respuesta"></p>
-  </main>
-  <script>
-    function aceptar() {
-      document.getElementById("respuesta").textContent =
-        "¡Sabía que dirías que sí! 🥰🍿";
-    }
-    function rechazar() {
-      document.getElementById("respuesta").textContent =
-        "Piénsalo otra vez, quiero ir contigo. 🥺❤️";
-    }
-  </script>
+<main class="card">
+
+    <div class="topline">UMBRELLA CORPORATION</div>
+
+    <div class="biohazard">☣</div>
+
+    <h1>Archivo clasificado</h1>
+
+    <div class="subtitle">⚠ MISIÓN ESPECIAL · ACCESO RESTRINGIDO ⚠</div>
+
+    <div class="line"></div>
+
+    <div class="label">EXPEDIENTE CONFIDENCIAL #016</div>
+
+    <div class="question">¿ACEPTAS ESTA MISIÓN?</div>
+
+    <p class="description">
+        Agente, tenemos una misión especial para ti.<br>
+        Tu objetivo es acompañarme a una cita de cine.
+    </p>
+
+    <div class="line"></div>
+
+    <div class="label">FECHA DE LA OPERACIÓN</div>
+
+    <div class="date">
+        VIERNES 16 DE OCTUBRE<br>
+        2026
+    </div>
+
+    <p class="description">
+        Operación: noche de película<br>
+        Nivel de riesgo: enamorarse más ❤️
+    </p>
+
+    <button class="accept" onclick="aceptarMision()">
+        ☣ ACEPTAR MISIÓN ❤️
+    </button>
+
+    <button class="reject" onclick="rechazarMision()">
+        RECHAZAR MISIÓN
+    </button>
+
+    <div id="message"></div>
+
+    <div class="footer">
+        SOLO PERSONAL AUTORIZADO · R.P.D.
+    </div>
+
+</main>
+
+<script>
+function aceptarMision() {
+    const mensaje = document.getElementById("message");
+    mensaje.style.display = "block";
+    mensaje.innerHTML = `
+        <h2>¡MISIÓN ACEPTADA! ❤️</h2>
+        Agente, prepara tu equipo.<br>
+        Tu próxima misión es pasar una bonita
+        noche conmigo viendo una película. 🎬<br><br>
+        <strong>Tu presencia es el único requisito.</strong><br>
+        Nos vemos el viernes. ❤️
+    `;
+}
+
+function rechazarMision() {
+    const mensaje = document.getElementById("message");
+    mensaje.style.display = "block";
+    mensaje.innerHTML = `
+        <h2>⚠ ERROR DE SISTEMA ⚠</h2>
+        Esta opción está temporalmente fuera de servicio. 😂❤️<br>
+        Inténtalo de nuevo, agente.
+    `;
+}
+</script>
+
 </body>
 </html>
-
 
